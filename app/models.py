@@ -8,6 +8,10 @@ class User(db.Model):
     username = db.Column(db.String())
     role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
     pass_secure = db.Column(db.String(255))
+    comment = db.relationship('Comment', backref = 'user', lazy = 'dynamic')
+    pitches= db.relationship('Pitch',backref = 'user',lazy = "dynamic")
+    upvotes = db.relationship('Upvote', backref = 'user', lazy = 'dynamic')
+    downvotes = db.relationship('Downvote', backref = 'user', lazy = 'dynamic')
 
     def __repr__(self):
         return f'User {self.username}'
