@@ -25,7 +25,22 @@ class Role(db.Model):
 
 class Pitch(db.Model):
     __tablename__ ='pitches'
+
     id = db.Column(db.Integer,primary_key = True)
     title = db.Column(db.String)
     description = db.Column(db.String)
     category = db.Column(db.String(255), nullable=False)
+    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+
+
+class Comment(db.Model):
+    __tablaname__='comments'
+
+    id = db.Column(db.Integer,primary_key=True)
+    pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable= False)
+    description = db.Column(db.Text)
+
+class Upvote(db.Model):
+    __tablename__='upvotes'
+    
