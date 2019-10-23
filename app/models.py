@@ -12,8 +12,9 @@ class User(UserMixin,db.Model):
     username = db.Column(db.String(255))
     email = db.Column(db.String(255),unique = True,index = True)
     role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
+    bio = db.Column(db.String(255))
+    profile_pic_path = db.Column(db.String())
     password_hash = db.Column(db.String(255))
-
     pass_secure = db.Column(db.String(255))
     comment = db.relationship('Comment', backref = 'user', lazy = 'dynamic')
     pitches= db.relationship('Pitch',backref = 'user',lazy = "dynamic")
@@ -83,7 +84,7 @@ class Downvote(db.Model):
     pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
 
-    
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
