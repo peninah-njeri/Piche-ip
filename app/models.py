@@ -95,7 +95,7 @@ class Upvote(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def add_upvotes(cls,id):
+    def add_upvotes(self,cls,id):
         upvote_pitch = Upvote(user = current_user, pitch_id=id)
         upvote_pitch.save_upvotes()
   
@@ -124,8 +124,8 @@ class Downvote(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def add_downvotes(cls,id):
-        downvote_pitch = Downvote(user = current_user, pitch_id=id)
+    def add_downvotes(self,cls,id):
+        downvote_pitch = Downvote(user = User, pitch_id=id)
         downvote_pitch.save_downvotes()
 
     @classmethod
