@@ -2,7 +2,7 @@
 {% block content%}
     {% for pitch in pitches %}
           <div>
-                <div class="card" style="max-width: 700px;">
+                <div class="card my-5" style="max-width: 700px;">
                   <div class="card-header">
                     <h5 class="card-title">{{ pitch.title }}</h5>
                   </div>
@@ -12,7 +12,7 @@
                         <a href="{{url_for('comments.add_comment',pitch_id = pitch.id)}}" class="btn btn-outline-primary d-inline mr-3">Comment</a>
                         <h4 class="card-text d-inline mr-3"><small class="text-muted"><a href="{{url_for('main.home', pitch_id = pitch.id, like = 'like')}}">likes</a> {{ pitch.upvote }}</small></h4>
                         <h4 class="card-text d-inline mr-3"><small class="text-muted"><a href="{{url_for('main.home', pitch_id = pitch.id, like = 'dislike')}}">dislikes</a> {{ pitch.downvote }}</small></h4>
-                        <a href="{{url_for('comments.view_comments',comments = pitch.comments)}}" class="btn btn-outline-secondary d-inline mr-3">View Comment</a>
+                        <a href="{{url_for('comments.view_comments',pitch_id = pitch.id, users_comments = pitch.comments)}}" class="btn btn-outline-secondary d-inline mr-3">View Comment</a>
                       </div>
                   </div>
                 </div>
@@ -20,14 +20,13 @@
     {% endfor %}
 {% endblock%}
 {% block sidebar %}
-    <div class="content-section">
+    <div class="content-section my-5">
         <h3>Categories </h3>
-        <p class='text-muted'>View pitches from different categories.
-            <ul class="list-group">
-                <li class="list-group-item list-group-item-light"> <a href="{{url_for('main.home')}}">All</a></li>
-                <li class="list-group-item list-group-item-light"> <a href="{{url_for('main.home', category = 'tech')}}">Technology</a></li>
-                <li class="list-group-item list-group-item-light"> <a href="{{url_for('main.home', category = 'physics')}}">Physics</a></li>
-                <li class="list-group-item list-group-item-light"> <a href="{{url_for('main.home', category = 'environment')}}">Environment</a></li>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"> <a href="{{url_for('main.home')}}">All</a></li>
+                <li class=" list-group-item"> <a href="{{url_for('main.home', category = 'tech')}}">Technology</a></li>
+                <li class=" list-group-item"> <a href="{{url_for('main.home', category = 'physics')}}">Physics</a></li>
+                <li class="list-group-item"> <a href="{{url_for('main.home', category = 'environment')}}">Environment</a></li>
             </ul>
         </p>
     </div>

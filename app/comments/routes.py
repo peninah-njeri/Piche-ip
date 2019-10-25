@@ -1,10 +1,11 @@
 from flask import Blueprint, flash, url_for, redirect, render_template
 from flask_login import login_required, current_user
 
-
 from app.comments.forms import CommentForm
 from app.models import Comment
 from app import db
+
+from app.models import Pitch
 
 comments = Blueprint('comments', __name__)
 
@@ -20,3 +21,10 @@ def add_comment(pitch_id):
         flash('Your comment was added!', 'success')
         return redirect(url_for('main.home'))
     return render_template('add_comment.html', form=form)
+
+@comments.route('/view_comments/<int:pitch_id>')
+def view_comments(pitch_id):
+    pitch = Pitch.query.get(pitch_id)
+    users_comments = pitch.comments
+    print(users_comments)
+    return render_template('comments.html', comments = users_comments)

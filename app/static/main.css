@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
 body {
-  background: #fafafa;
+  /*background: #fafafa;*/
+  background: #ccc;
   color: #333333;
   margin-top: 5rem;
 }
@@ -80,4 +81,8 @@ a.article-title:hover {
 
 .account-heading {
   font-size: 2.5rem;
+}
+li.list-group-item a{
+    color: rgb(204, 51, 153) !important;
+     font-family: 'Lobster', cursive;
 }
