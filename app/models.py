@@ -1,142 +1,46 @@
-from . import db
-from werkzeug.security import generate_password_hash,check_password_hash
-from flask_login import UserMixin
-from . import login_manager
+from app import db
 from datetime import datetime
+from app import login_manager
+from flask_login import UserMixin
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
-class User(UserMixin,db.Model):
-    __tablename__ = 'users'
-
-    id = db.Column(db.Integer,primary_key = True)
-    username = db.Column(db.String(255),index = True)
-    email = db.Column(db.String(255),unique = True,index = True)
-    role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
-    bio = db.Column(db.String(255))
-    profile_pic_path = db.Column(db.String())
-    password_secure = db.Column(db.String(255))
-    password_hash = db.Column(db.String(255))
-    pass_secure = db.Column(db.String(255))
-    comment = db.relationship('Comment', backref = 'user', lazy = 'dynamic')
-    pitches= db.relationship('Pitch',backref = 'user',lazy = "dynamic")
-    upvotes = db.relationship('Upvote', backref = 'user', lazy = 'dynamic')
-    downvotes = db.relationship('Downvote',backref = 'user', lazy = 'dynamic')
-  
-    @login_manager.user_loader
-    def load_user(self,user_id):
-        return User.query.get(int(user_id))
-        
-    @property
-    def password(self):
-            raise AttributeError('You cannot read the password attribute')
-
-    @password.setter
-    def password(self, password):
-            self.pass_secure = generate_password_hash(password)
-
-    def verify_password(self,password):
-            return check_password_hash(self.pass_secure,password)
+class User(db.Model, UserMixin):
+    __tablename__='users'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
+    password = db.Column(db.String(60), nullable=False)
+    pitches = db.relationship('Pitch', backref='author', lazy=True)
+    comments = db.relationship('Comment', backref='author', lazy= True)
 
     def __repr__(self):
-        return f'User {self.username}'
-
-class Role(db.Model):
-    __tablename__ = 'roles'
-
-    id = db.Column(db.Integer,primary_key = True)
-    name = db.Column(db.String(255))
-    users = db.relationship('User',backref = 'role',lazy="dynamic")
-
-    def __repr__(self):
-        return f'User {self.name}' 
+        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
 class Pitch(db.Model):
-    
-    __tablename__ = 'pitches'
+    __tablename__='pitches'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    content = db.Column(db.Text, nullable=False)
+    category = db.Column(db.String, nullable = False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    upvote = db.Column(db.Integer, nullable=False, default = 0)
+    downvote = db.Column(db.Integer, nullable=False, default = 0)
+    comments = db.relationship('Comment', backref='pitch', lazy=True)
 
-    id = db.Column(db.Integer,primary_key = True)
-    title = db.Column(db.String)
-    description = db.Column(db.String)
-    category = db.Column(db.String(255), nullable=False)
-    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
-    comments = db.relationship('Comment',backref='pitch',lazy='dynamic')
-    upvotes = db.relationship('Upvote', backref = 'pitch', lazy = 'dynamic')
-    downvotes = db.relationship('Downvote', backref = 'pitch', lazy = 'dynamic')
-
-    def save_pitch(self):
-        db.session.add(self)
-        db.session.commit()
-
-    @classmethod
-    def get_pitches(cls,id):
-        pitches = Pitch.query.filter_by(movie_id=id).all()
-        return pitches
+    def __repr__(self):
+        return f"Post('{self.title}', '{self.date_posted}')"
 
 class Comment(db.Model):
-    __tablename__='comments'
-    
-    id = db.Column(db.Integer,primary_key=True)
+    __tablename__ ='comments'
+    id = db.Column(db.Integer, primary_key=True)
     pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable= False)
-    description = db.Column(db.Text)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    description = db.Column(db.Text, nullable=False)
 
     def __repr__(self):
         return f"Comment : id: {self.id} comment: {self.description}"
-
-class Upvote(db.Model):
-    __tablename__ = 'upvotes'
-
-    id = db.Column(db.Integer,primary_key=True)
-    upvote = db.Column(db.Integer,default=1)
-    pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))
-    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
-
-    def save_upvotes(self):
-        db.session.add(self)
-        db.session.commit()
-
-    def add_upvotes(self,cls,id):
-        upvote_pitch = Upvote(user = current_user, pitch_id=id)
-        upvote_pitch.save_upvotes()
-  
-    @classmethod
-    def get_upvotes(cls,id):
-        upvote = Upvote.query.filter_by(pitch_id=id).all()
-        return upvote
-
-    @classmethod
-    def get_all_upvotes(cls,pitch_id):
-        upvotes = Upvote.query.order_by('id').all()
-        return upvotes
-
-    def __repr__(self):
-        return f'{self.user_id}:{self.pitch_id}'
-
-class Downvote(db.Model):
-    __tablename__ = 'downvotes'
-
-    id = db.Column(db.Integer,primary_key=True)
-    downvote = db.Column(db.Integer,default=1)
-    pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))
-    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
-
-    def save_downvotes(self):
-        db.session.add(self)
-        db.session.commit()
-
-    def add_downvotes(self,cls,id):
-        downvote_pitch = Downvote(user = User, pitch_id=id)
-        downvote_pitch.save_downvotes()
-
-    @classmethod
-    def get_downvotes(cls,id):
-        downvote = Downvote.query.filter_by(pitch_id=id).all()
-        return downvote
-
-    @classmethod
-    def get_all_downvotes(cls,pitch_id):
-        downvote = Downvote.query.order_by('id').all()
-        return downvote
-
-    def __repr__(self):
-        return f'{self.user_id}:{self.pitch_id}'

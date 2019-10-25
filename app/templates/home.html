@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+{% block content%}
+    {% for pitch in pitches %}
+          <div>
+                <div class="card" style="max-width: 540px;">
+                    <div class="row no-gutters">
+                          <div class=" col-sm-3">
+                                <img src="{{url_for('static', filename='profile_avatars/' + pitch.author.image_file)}}" class="card-img" alt="...">
+                          </div>
+                          <div class="col-sm-9">
+                                <div class="card-body">
+                                      <h5 class="card-title">{{ pitch.title }}</h5>
+                                      <p class="card-text">{{pitch.content}}</p>
+                                      <div class="mb-3">
+                                        <h4 class="card-text d-inline mr-3"><small class="text-muted">{{ pitch.date_posted.strftime('%Y-%m-%d') }}</small></h4>
+                                        <h4 class="card-text d-inline mr-3"><small class="text-muted">{{ pitch.author.username }}</small></h4>
+                                        <h4 class="card-text d-inline mr-3"><small class="text-muted">{{ pitch.category }}</small></h4>
+                                      </div>
+                                      <div>
+                                        <a href="{{url_for('comments.add_comment',pitch_id = pitch.id)}}" class="btn btn-outline-primary d-inline mr-3">Comment</a>
+                                        <h4 class="card-text d-inline mr-3"><small class="text-muted"><a href="{{url_for('main.home', pitch_id = pitch.id, like = 'like')}}">likes</a> {{ pitch.upvote }}</small></h4>
+                                        <h4 class="card-text d-inline mr-3"><small class="text-muted"><a href="{{url_for('main.home', pitch_id = pitch.id, like = 'dislike')}}">dislikes</a> {{ pitch.downvote }}</small></h4>
+                                      </div>
+
+
+                                </div>
+                          </div>
+                    </div>
+                </div>
+                <div class="accordion mb-5" id="accordionExample" style="max-width: 540px;">
+                  <div class="card">
+                    <div class="card-header" id="headingOne">
+                      <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{pitch.id}}" aria-expanded="true" aria-controls="collapse{{pitch.id}}">
+                          View Comments
+                        </button>
+                      </h2>
+                    </div>
+                    <div id="collapse{{pitch.id}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                      <div class="card-body">
+                         {% for comment in pitch.comments%}
+                            <div class="card mb-2">
+                              <div class="card-body">
+                                <blockquote class="blockquote mb-0">
+                                  <p>{{comment.description}}</p>
+                                  <footer class="blockquote-footer">{{comment.author.username}}</footer>
+                                </blockquote>
+                              </div>
+                            </div>
+                         {% endfor%}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          </div>
+    {% endfor %}
+{% endblock%}
+{% block sidebar %}
+    <div class="content-section">
+        <h3>Categories </h3>
+        <p class='text-muted'>View pitches from different categories.
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-light"> <a href="{{url_for('main.home')}}">All</a></li>
+                <li class="list-group-item list-group-item-light"> <a href="{{url_for('main.home', category = 'tech')}}">Technology</a></li>
+                <li class="list-group-item list-group-item-light"> <a href="{{url_for('main.home', category = 'physics')}}">Physics</a></li>
+                <li class="list-group-item list-group-item-light"> <a href="{{url_for('main.home', category = 'environment')}}">Environment</a></li>
+            </ul>
+        </p>
+    </div>
+
+{% endblock %}
+

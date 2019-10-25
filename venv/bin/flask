@@ -1,8 +1,10 @@
-#!/home/student/Documents/njeri-moringa-school-projects/Pitches/venv/bin/python3.6
+#!/home/orion/Documents/Friday_Projects/Core/Python/flask/one_minute_pitch/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
+
 from flask.cli import main
+
 if __name__ == '__main__':
-    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
+    sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
     sys.exit(main())
