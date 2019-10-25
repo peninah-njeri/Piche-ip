@@ -20,4 +20,3 @@ def add_comment(pitch_id):
         flash('Your comment was added!', 'success')
         return redirect(url_for('main.home'))
     return render_template('add_comment.html', form=form)
-

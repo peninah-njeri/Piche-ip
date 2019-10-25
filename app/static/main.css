@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
 body {
   background: #fafafa;
   color: #333333;
@@ -10,14 +10,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .bg-steel {
-  background-color: #0787FF;
+  background-color: rgb(204, 51, 153);
 }
 .navbar-brand{
-  font-family: 'Righteous', cursive;
+ font-family: 'Lobster', cursive;
 }
 .site-header .navbar-nav .nav-link {
   color: #cbd5db;
-  font-family: 'Righteous', cursive;
 }
 
 .site-header .navbar-nav .nav-link:hover {
