@@ -1,9 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
 body {
-  /*background: #fafafa;*/
   background: #ccc;
   color: #333333;
   margin-top: 5rem;
+}
+body::-webkit-scrollbar {
+    background-color: #DADADA;
+    width:12px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: rgb(204, 51, 153);
+    border-radius: 25px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -85,4 +93,18 @@ a.article-title:hover {
 li.list-group-item a{
     color: rgb(204, 51, 153) !important;
      font-family: 'Lobster', cursive;
+     font-size:25px;
+}
+.btn-outline-primary, btn-outline-info{
+    color:rgb(204, 51, 153);
+    border-color:rgb(204, 51, 153);
+}
+.btn-primary{
+   background-color:rgb(204, 51, 153);
+   border-color:rgb(204, 51, 153);
+}
+.btn-primary:hover{
+   background-color:rgb(255, 0, 128);
+   border-color:rgb(255, 0, 128);
+
 }
