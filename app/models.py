@@ -20,10 +20,10 @@ class User(UserMixin,db.Model):
     comment = db.relationship('Comment', backref = 'user', lazy = 'dynamic')
     pitches= db.relationship('Pitch',backref = 'user',lazy = "dynamic")
     upvotes = db.relationship('Upvote', backref = 'user', lazy = 'dynamic')
-    downvotes = db.relationship('Downvote', backref = 'user', lazy = 'dynamic')
+    downvotes = db.relationship('Downvote',backref = 'user', lazy = 'dynamic')
   
     @login_manager.user_loader
-    def load_user(user_id):
+    def load_user(self,user_id):
         return User.query.get(int(user_id))
         
     @property

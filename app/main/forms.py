@@ -5,7 +5,7 @@ from wtforms.validators import Required
 class PitchForm(FlaskForm):
    title = StringField('Pitch title',validators=[Required()])
    description = TextAreaField('Pitch Description', validators=[Required()]) 
-   category = RadioField('Label', choices=[ ('Cute','Cute'), ('Funny','Funny'),('Inspirational','Inspirational'),('Love','Love')],validators=[Required()])
+   category = RadioField('Label', choices=[ ('Health','Health'), ('Diet','Diet'),('Exercise','Exercise')],validators=[Required()])
    submit = SubmitField('Submit')
 class UpdateProfile(FlaskForm):
    bio = TextAreaField('Tell us about you.',validators = [Required()])

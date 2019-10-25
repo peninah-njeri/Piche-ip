@@ -4,6 +4,7 @@ from ..models import Pitch, User, Comment,Upvote,Downvote
 from .forms import PitchForm,UpdateProfile, CommentForm
 from .. import db,photos
 from flask_login import login_required, current_user
+from flask_login import login_required
 
 import markdown2 
 @main.route('/pitch/<int:id>')
