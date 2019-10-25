@@ -4,6 +4,7 @@ A web application that lets users submit pitches based on different categories.
 Peninah
 
 ## Link to Live Site
+https://sixty-seconds-pitch.herokuapp.com
 
 
 ## Description
