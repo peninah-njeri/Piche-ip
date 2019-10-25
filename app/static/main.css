@@ -95,10 +95,15 @@ li.list-group-item a{
      font-family: 'Lobster', cursive;
      font-size:25px;
 }
-.btn-outline-primary, btn-outline-info{
+.btn-outline-primary, .btn-outline-info{
     color:rgb(204, 51, 153);
     border-color:rgb(204, 51, 153);
 }
+.btn-outline-primary:hover, .btn-outline-info:hover{
+   background-color:rgb(255, 0, 128);
+   border-color:rgb(255, 0, 128);
+}
+
 .btn-primary{
    background-color:rgb(204, 51, 153);
    border-color:rgb(204, 51, 153);
@@ -106,5 +111,4 @@ li.list-group-item a{
 .btn-primary:hover{
    background-color:rgb(255, 0, 128);
    border-color:rgb(255, 0, 128);
-
 }

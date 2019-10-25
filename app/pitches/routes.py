@@ -18,4 +18,4 @@ def new_pitch():
         db.session.commit()
         flash('Your pitch has been created!', 'success')
         return redirect(url_for('main.home'))
-    return render_template('create_pitch.html', form = form)
+    return render_template('add_pitch.html', form = form)

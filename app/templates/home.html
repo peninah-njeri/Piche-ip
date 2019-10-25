@@ -10,8 +10,8 @@
                       <p class="card-text">{{pitch.content}}</p>
                       <div>
                         <a href="{{url_for('comments.add_comment',pitch_id = pitch.id)}}" class="btn btn-outline-primary d-inline mr-3">Comment</a>
-                        <h4 class="card-text d-inline mr-3"><small class="text-muted"><a href="{{url_for('main.home', pitch_id = pitch.id, like = 'like')}}">likes</a> {{ pitch.upvote }}</small></h4>
-                        <h4 class="card-text d-inline mr-3"><small class="text-muted"><a href="{{url_for('main.home', pitch_id = pitch.id, like = 'dislike')}}">dislikes</a> {{ pitch.downvote }}</small></h4>
+                        <h4 class="card-text d-inline mr-3"><small class="text-muted"><a href="{{url_for('main.home', pitch_id = pitch.id, like = 'like')}}"><i class="fa fa-thumbs-up"></i></a> {{ pitch.upvote }}</small></h4>
+                        <h4 class="card-text d-inline mr-3"><small class="text-muted"><a href="{{url_for('main.home', pitch_id = pitch.id, like = 'dislike')}}"><i class="fa fa-thumbs-down"></i></a> {{ pitch.downvote }}</small></h4>
                         <a href="{{url_for('comments.view_comments',pitch_id = pitch.id, users_comments = pitch.comments)}}" class="btn btn-outline-secondary d-inline mr-3">View Comments</a>
                       </div>
                   </div>
@@ -24,9 +24,9 @@
         <h3>Categories </h3>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"> <a href="{{url_for('main.home')}}"><span style=" content: '\2713';">&#10003;</span> All</a></li>
-                <li class=" list-group-item"> <a href="{{url_for('main.home', category = 'tech')}}"><span style=" content: '\2713';">&#10003;</span> Health</a></li>
-                <li class=" list-group-item"> <a href="{{url_for('main.home', category = 'physics')}}"><span style=" content: '\2713';">&#10003;</span> Diet</a></li>
-                <li class="list-group-item"> <a href="{{url_for('main.home', category = 'environment')}}"><span style=" content: '\2713';">&#10003;</span> Exercise</a></li>
+                <li class=" list-group-item"> <a href="{{url_for('main.home', category = 'health')}}"><span style=" content: '\2713';">&#10003;</span> Health</a></li>
+                <li class=" list-group-item"> <a href="{{url_for('main.home', category = 'diet')}}"><span style=" content: '\2713';">&#10003;</span> Diet</a></li>
+                <li class="list-group-item"> <a href="{{url_for('main.home', category = 'exercise')}}"><span style=" content: '\2713';">&#10003;</span> Exercise</a></li>
             </ul>
         </p>
     </div>
