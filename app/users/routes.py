@@ -5,7 +5,6 @@ from flask import redirect, url_for, render_template, flash
 from app import bcrypt, db
 from app.models import User
 from app.users.forms import RegistrationForm, LoginForm, UpdateAccountForm
-from app.users.utils import save_picture
 
 users = Blueprint('users',__name__)
 
@@ -52,9 +51,6 @@ def account():
     form = UpdateAccountForm()
     user_avatar = url_for('static', filename='profile_avatars/' + current_user.image_file)
     if form.validate_on_submit():
-        if form.picture.data:
-            picture_file = save_picture(form.picture.data)
-            current_user.image_file = picture_file
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()
